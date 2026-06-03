@@ -2,6 +2,29 @@
 
 import { FormEvent, useState } from "react";
 
+const arrivalTimes = [
+  "10:00",
+  "10:30",
+  "11:00",
+  "11:30",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+];
+
 export default function BookingForm() {
   const [message, setMessage] = useState("");
 
@@ -13,10 +36,10 @@ export default function BookingForm() {
     const owner = data.get("owner") || "你";
     const service = data.get("service") || "洗护";
     const date = data.get("date") || "所选日期";
-    const time = data.get("time") || "所选时段";
+    const arrivalTime = data.get("arrivalTime") || "所选到店时间";
 
     setMessage(
-      `${owner}，已记录 ${date} ${time} 的${service}需求，请电话确认最终到店时间。`,
+      `${owner}，已记录 ${date} ${arrivalTime} 到店的${service}需求，请电话确认最终安排。`,
     );
     form.reset();
   }
@@ -61,13 +84,12 @@ export default function BookingForm() {
           <input name="date" type="date" required />
         </label>
         <label>
-          期望时段
-          <select name="time" required defaultValue="">
+          期望到店时间
+          <select name="arrivalTime" required defaultValue="">
             <option value="">请选择</option>
-            <option>10:00-12:00</option>
-            <option>12:00-15:00</option>
-            <option>15:00-18:00</option>
-            <option>18:00-20:00</option>
+            {arrivalTimes.map((time) => (
+              <option key={time}>{time}</option>
+            ))}
           </select>
         </label>
       </div>
