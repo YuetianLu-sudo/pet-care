@@ -815,12 +815,19 @@
     .booking-layout {
       display: grid;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-areas:
+        "details form"
+        "map map";
       gap: 34px;
       align-items: start;
     }
 
     .booking-layout > * {
       min-width: 0;
+    }
+
+    .booking-details {
+      grid-area: details;
     }
 
     .contact-box {
@@ -862,9 +869,9 @@
 
     .store-map {
       position: relative;
+      grid-area: map;
       display: block;
-      aspect-ratio: 1.42;
-      margin-top: 20px;
+      aspect-ratio: 1517 / 1037;
       overflow: hidden;
       border: 1px solid rgba(36, 101, 83, 0.18);
       border-radius: var(--radius);
@@ -875,7 +882,8 @@
     .store-map img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      display: block;
     }
 
     .store-map::after {
@@ -918,6 +926,7 @@
     }
 
     .booking-form {
+      grid-area: form;
       display: grid;
       gap: 16px;
       padding: 26px;
@@ -1027,6 +1036,13 @@
       .process-layout,
       .booking-layout {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .booking-layout {
+        grid-template-areas:
+          "details"
+          "map"
+          "form";
       }
 
       .booking-strip .section-inner {
@@ -1530,7 +1546,7 @@
 
     <section class="booking" id="booking">
       <div class="section-inner booking-layout">
-        <div>
+        <div class="booking-details">
           <p class="section-kicker">Booking</p>
           <h2>预约洗护时间</h2>
           <p class="section-note">提交后页面会记录你的选择。实际预约请通过电话或门店消息确认具体时段。</p>
@@ -1556,15 +1572,15 @@
               <span><strong>周一至周日 10:00-20:00</strong><span>节假日建议提前预约</span></span>
             </div>
           </div>
-
-          <a class="store-map" href="https://map.baidu.com/search/上海市宜川路街道陕西北路1620号" target="_blank" rel="noopener" aria-label="晴爪 Pawlish 宠物洗护馆位置图，上海市宜川路街道陕西北路1620号">
-            <img src="assets/pawlish-store-map.png" alt="晴爪 Pawlish 宠物洗护馆周边可爱风格位置示意图">
-            <span class="map-label">
-              <strong>晴爪 Pawlish 在这里</strong>
-              <span>上海市宜川路街道陕西北路1620号</span>
-            </span>
-          </a>
         </div>
+
+        <a class="store-map" href="https://map.baidu.com/search/上海市宜川路街道陕西北路1620号" target="_blank" rel="noopener" aria-label="晴爪 Pawlish 宠物洗护馆位置图，上海市宜川路街道陕西北路1620号">
+          <img src="assets/pawlish-store-map.png" alt="晴爪 Pawlish 宠物洗护馆周边可爱风格位置示意图">
+          <span class="map-label">
+            <strong>晴爪 Pawlish 在这里</strong>
+            <span>上海市宜川路街道陕西北路1620号</span>
+          </span>
+        </a>
 
         <form class="booking-form" id="bookingForm">
           <div class="form-row">

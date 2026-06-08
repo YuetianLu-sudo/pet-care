@@ -281,7 +281,7 @@ export default function Home() {
       
           <section className="booking" id="booking">
             <div className="section-inner booking-layout">
-              <div>
+              <div className="booking-details">
                 <p className="section-kicker">Booking</p>
                 <h2>预约洗护时间</h2>
                 <p className="section-note">提交后页面会记录你的选择。实际预约请通过电话或门店消息确认具体时段。</p>
@@ -307,15 +307,14 @@ export default function Home() {
                     <span><strong>周一至周日 10:00-20:00</strong><span>节假日建议提前预约</span></span>
                   </div>
                 </div>
-      
-                <a className="store-map" href="https://map.baidu.com/search/上海市宜川路街道陕西北路1620号" target="_blank" rel="noopener" aria-label="晴爪 Pawlish 宠物洗护馆位置图，上海市宜川路街道陕西北路1620号">
-                  <img src="/assets/pawlish-store-map.png" alt="晴爪 Pawlish 宠物洗护馆周边可爱风格位置示意图" />
-                  <span className="map-label">
-                    <strong>晴爪 Pawlish 在这里</strong>
-                    <span>上海市宜川路街道陕西北路1620号</span>
-                  </span>
-                </a>
               </div>
+              <a className="store-map" href="https://map.baidu.com/search/上海市宜川路街道陕西北路1620号" target="_blank" rel="noopener" aria-label="晴爪 Pawlish 宠物洗护馆位置图，上海市宜川路街道陕西北路1620号">
+                <img src="/assets/pawlish-store-map.png" alt="晴爪 Pawlish 宠物洗护馆周边可爱风格位置示意图" />
+                <span className="map-label">
+                  <strong>晴爪 Pawlish 在这里</strong>
+                  <span>上海市宜川路街道陕西北路1620号</span>
+                </span>
+              </a>
               <BookingForm />
             </div>
           </section>
