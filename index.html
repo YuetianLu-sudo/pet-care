@@ -282,6 +282,7 @@
 
     section {
       padding: 76px 0;
+      scroll-margin-top: 88px;
     }
 
     .section-head {
@@ -677,14 +678,39 @@
       font-size: 0.95rem;
     }
 
-    .reviews {
+    .reviews-carousel {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
+    .review-viewport {
+      display: grid;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+
+    .review-page {
+      grid-area: 1 / 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(18px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .review-page.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+      z-index: 1;
+    }
+
     .review-card {
-      min-height: 248px;
+      min-height: 270px;
+      display: flex;
+      flex-direction: column;
       padding: 24px;
     }
 
@@ -701,8 +727,84 @@
     }
 
     .reviewer {
+      display: grid;
+      gap: 2px;
+      margin-top: auto;
       color: var(--muted);
       font-weight: 720;
+    }
+
+    .reviewer strong {
+      color: var(--ink);
+      font-size: 0.98rem;
+    }
+
+    .reviewer span {
+      font-size: 0.88rem;
+      font-weight: 650;
+    }
+
+    .review-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .review-arrow {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(36, 101, 83, 0.18);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--sage-deep);
+      box-shadow: 0 8px 22px rgba(22, 32, 29, 0.08);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .review-arrow:hover,
+    .review-arrow:focus-visible {
+      border-color: rgba(36, 101, 83, 0.42);
+      color: var(--ink);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .review-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .review-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 2px;
+    }
+
+    .review-dot {
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(36, 101, 83, 0.26);
+      cursor: pointer;
+      transition: width 180ms ease, background 180ms ease;
+    }
+
+    .review-dot.is-active {
+      width: 28px;
+      background: var(--sage-deep);
+    }
+
+    .review-dot:focus-visible {
+      outline: 2px solid var(--sage-deep);
+      outline-offset: 3px;
     }
 
     .booking {
@@ -921,7 +1023,7 @@
       .hero-facts,
       .services-grid,
       .prices,
-      .reviews,
+      .review-page,
       .process-layout,
       .booking-layout {
         grid-template-columns: minmax(0, 1fr);
@@ -1052,7 +1154,10 @@
 
     @media (prefers-reduced-motion: reduce) {
       .carousel-slide,
-      .carousel-dot {
+      .carousel-dot,
+      .review-page,
+      .review-arrow,
+      .review-dot {
         transition: none;
       }
     }
@@ -1347,22 +1452,78 @@
           <p class="section-note">我们更在意的是宠物愿不愿意第二次轻松走进来。</p>
         </div>
 
-        <div class="reviews">
-          <article class="review-card">
-            <div class="stars" aria-label="五星评价">★★★★★</div>
-            <blockquote>我家小狗很怕吹风，店员会停下来安抚，最后出来蓬松又不紧张。</blockquote>
-            <div class="reviewer">可乐的主人</div>
-          </article>
-          <article class="review-card">
-            <div class="stars" aria-label="五星评价">★★★★★</div>
-            <blockquote>猫咪洗护很专业，全程分区，回家没有香精味，毛也顺了很多。</blockquote>
-            <div class="reviewer">奶盖的主人</div>
-          </article>
-          <article class="review-card">
-            <div class="stars" aria-label="五星评价">★★★★★</div>
-            <blockquote>修剪前会认真沟通脸型和长度，不会一刀切，照片记录也很贴心。</blockquote>
-            <div class="reviewer">芝麻的主人</div>
-          </article>
+        <div class="reviews-carousel" data-review-carousel role="group" aria-label="客户评价轮播">
+          <div class="review-viewport" aria-live="polite">
+            <div class="review-page is-active" aria-hidden="false">
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>我家小狗很怕吹风，店员会停下来安抚，最后出来蓬松又不紧张。</blockquote>
+                <div class="reviewer">
+                  <strong>可乐的主人</strong>
+                  <span>胆小比熊 · 基础洗护</span>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>猫咪洗护很专业，全程分区，回家没有香精味，毛也顺了很多。</blockquote>
+                <div class="reviewer">
+                  <strong>奶盖的主人</strong>
+                  <span>长毛猫 · 深层护理</span>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>修剪前会认真沟通脸型和长度，不会一刀切，照片记录也很贴心。</blockquote>
+                <div class="reviewer">
+                  <strong>芝麻的主人</strong>
+                  <span>泰迪 · 洗护加精修</span>
+                </div>
+              </article>
+            </div>
+            <div class="review-page" aria-hidden="true">
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>第一次带幼犬洗澡，本来担心会害怕，护理师一直放慢节奏，接回家状态很放松。</blockquote>
+                <div class="reviewer">
+                  <strong>团子的主人</strong>
+                  <span>幼犬 · 适应洗护</span>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>换毛季梳出了好多浮毛，家里沙发终于轻松很多，护理建议也讲得很清楚。</blockquote>
+                <div class="reviewer">
+                  <strong>豆包的主人</strong>
+                  <span>柯基 · 除浮毛护理</span>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="stars" aria-label="五星评价">★★★★★</div>
+                <blockquote>店里干净、没有混杂气味，猫犬分区让我比较安心，预约沟通也很顺。</blockquote>
+                <div class="reviewer">
+                  <strong>栗子的主人</strong>
+                  <span>英短 · 日常洗护</span>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="review-controls" aria-label="切换客户评价">
+            <button class="review-arrow" type="button" aria-label="上一组评价" data-review-prev>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m14.5 5-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="review-dots">
+              <button class="review-dot is-active" type="button" aria-label="查看第 1 组评价" aria-current="true" data-review-dot></button>
+              <button class="review-dot" type="button" aria-label="查看第 2 组评价" aria-current="false" data-review-dot></button>
+            </div>
+            <button class="review-arrow" type="button" aria-label="下一组评价" data-review-next>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m9.5 5 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -1538,6 +1699,57 @@
             setActiveSlide((activeIndex + 1) % slides.length);
           }, 4200);
         });
+      });
+    }
+
+    const reviewCarousel = document.querySelector("[data-review-carousel]");
+    if (reviewCarousel) {
+      const pages = [...reviewCarousel.querySelectorAll(".review-page")];
+      const dots = [...reviewCarousel.querySelectorAll("[data-review-dot]")];
+      const prev = reviewCarousel.querySelector("[data-review-prev]");
+      const next = reviewCarousel.querySelector("[data-review-next]");
+      let activePage = 0;
+
+      const setActiveReviewPage = (page) => {
+        activePage = (page + pages.length) % pages.length;
+        pages.forEach((reviewPage, pageIndex) => {
+          const isActive = pageIndex === activePage;
+          reviewPage.classList.toggle("is-active", isActive);
+          reviewPage.setAttribute("aria-hidden", isActive ? "false" : "true");
+        });
+        dots.forEach((dot, dotIndex) => {
+          const isActive = dotIndex === activePage;
+          dot.classList.toggle("is-active", isActive);
+          dot.setAttribute("aria-current", isActive ? "true" : "false");
+        });
+      };
+
+      let reviewTimer = window.setInterval(() => {
+        setActiveReviewPage(activePage + 1);
+      }, 5200);
+
+      const resetReviewTimer = () => {
+        window.clearInterval(reviewTimer);
+        reviewTimer = window.setInterval(() => {
+          setActiveReviewPage(activePage + 1);
+        }, 5200);
+      };
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          setActiveReviewPage(index);
+          resetReviewTimer();
+        });
+      });
+
+      prev.addEventListener("click", () => {
+        setActiveReviewPage(activePage - 1);
+        resetReviewTimer();
+      });
+
+      next.addEventListener("click", () => {
+        setActiveReviewPage(activePage + 1);
+        resetReviewTimer();
       });
     }
   </script>

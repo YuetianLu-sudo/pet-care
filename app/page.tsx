@@ -1,5 +1,6 @@
 import BookingForm from "../components/BookingForm";
 import PhotoCarousel from "../components/PhotoCarousel";
+import ReviewCarousel from "../components/ReviewCarousel";
 
 export default function Home() {
   return (
@@ -274,23 +275,7 @@ export default function Home() {
                 <p className="section-note">我们更在意的是宠物愿不愿意第二次轻松走进来。</p>
               </div>
       
-              <div className="reviews">
-                <article className="review-card">
-                  <div className="stars" aria-label="五星评价">★★★★★</div>
-                  <blockquote>我家小狗很怕吹风，店员会停下来安抚，最后出来蓬松又不紧张。</blockquote>
-                  <div className="reviewer">可乐的主人</div>
-                </article>
-                <article className="review-card">
-                  <div className="stars" aria-label="五星评价">★★★★★</div>
-                  <blockquote>猫咪洗护很专业，全程分区，回家没有香精味，毛也顺了很多。</blockquote>
-                  <div className="reviewer">奶盖的主人</div>
-                </article>
-                <article className="review-card">
-                  <div className="stars" aria-label="五星评价">★★★★★</div>
-                  <blockquote>修剪前会认真沟通脸型和长度，不会一刀切，照片记录也很贴心。</blockquote>
-                  <div className="reviewer">芝麻的主人</div>
-                </article>
-              </div>
+              <ReviewCarousel />
             </div>
           </section>
       
