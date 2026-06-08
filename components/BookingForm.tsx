@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 const arrivalTimes = [
+  "09:30",
   "10:00",
   "10:30",
   "11:00",
@@ -25,8 +26,24 @@ const arrivalTimes = [
   "19:30",
 ];
 
+function getTomorrowDateValue() {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const year = tomorrow.getFullYear();
+  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const day = String(tomorrow.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 export default function BookingForm() {
   const [message, setMessage] = useState("");
+  const [dateValue, setDateValue] = useState("");
+
+  useEffect(() => {
+    setDateValue(getTomorrowDateValue());
+  }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -42,6 +59,7 @@ export default function BookingForm() {
       `${owner}，已记录 ${date} ${arrivalTime} 到店的${service}需求，请电话确认最终安排。`,
     );
     form.reset();
+    setDateValue(getTomorrowDateValue());
   }
 
   return (
@@ -81,11 +99,17 @@ export default function BookingForm() {
       <div className="form-row">
         <label>
           期望日期
-          <input name="date" type="date" required />
+          <input
+            name="date"
+            type="date"
+            required
+            value={dateValue}
+            onChange={(event) => setDateValue(event.target.value)}
+          />
         </label>
         <label>
           期望到店时间
-          <select name="arrivalTime" required defaultValue="">
+          <select name="arrivalTime" required defaultValue="09:30">
             <option value="">请选择</option>
             {arrivalTimes.map((time) => (
               <option key={time}>{time}</option>
