@@ -705,12 +705,19 @@
     .booking-layout {
       display: grid;
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      grid-template-areas:
+        "details form"
+        "map map";
       gap: 34px;
       align-items: start;
     }
 
     .booking-layout > * {
       min-width: 0;
+    }
+
+    .booking-details {
+      grid-area: details;
     }
 
     .contact-box {
@@ -752,9 +759,9 @@
 
     .store-map {
       position: relative;
+      grid-area: map;
       display: block;
-      aspect-ratio: 1.42;
-      margin-top: 20px;
+      aspect-ratio: 1517 / 1037;
       overflow: hidden;
       border: 1px solid rgba(36, 101, 83, 0.18);
       border-radius: var(--radius);
@@ -765,7 +772,8 @@
     .store-map img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      display: block;
     }
 
     .store-map::after {
@@ -808,6 +816,7 @@
     }
 
     .booking-form {
+      grid-area: form;
       display: grid;
       gap: 16px;
       padding: 26px;
@@ -917,6 +926,13 @@
       .process-layout,
       .booking-layout {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .booking-layout {
+        grid-template-areas:
+          "details"
+          "map"
+          "form";
       }
 
       .booking-strip .section-inner {
@@ -1048,4 +1064,3 @@
         transition: none;
       }
     }
-  
